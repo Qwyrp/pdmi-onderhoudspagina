@@ -3,7 +3,7 @@
  * Plugin Name:       PDMI-onderhoudspagina
  * Plugin URI:        https://pdminternetdiensten.nl
  * Description:       Onderhoudspagina dmv tekst of een plaatje.
- * Version:           1.01
+ * Version:           1.1
  * Author:            PDMI
  * Author URI:        https://pdminternetdiensten.nl
  * Text Domain:       pdmi-onderhoudspagina
