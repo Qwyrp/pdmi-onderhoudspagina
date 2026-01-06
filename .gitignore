@@ -1,0 +1,29 @@
+# --- OS-specifieke bestanden ---
+Thumbs.db
+desktop.ini
+.DS_Store
+
+# --- Editor-specifieke bestanden ---
+.vscode/
+.idea/
+*.swp
+*.bak
+
+# --- WordPress-specifiek ---
+# Verwijder deze alleen als je ze specifiek wilt verspreiden via Git
+node_modules/
+vendor/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# --- Gebouwde bestanden (optioneel) ---
+# Als je SASS of JS compileert, wil je vaak de bronbestanden uploaden, 
+# maar niet de enorme caches van de build-tools.
+.sass-cache/
+dist/
+build/
+
+# --- Tijdelijke en logbestanden ---
+*.log
+sftp-config.json

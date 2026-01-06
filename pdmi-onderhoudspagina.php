@@ -14,6 +14,19 @@
 
 defined( 'ABSPATH' ) || exit;
 
+/* Nodig voor auto update */
+require_once __DIR__ . '/lib/plugin-update-checker/plugin-update-checker.php'; // Toegevoegd: __DIR__
+use YahnisElsts\PluginUpdateChecker\v5\PucFactory;
+
+$myUpdateChecker = PucFactory::buildUpdateChecker(
+	'https://github.com/Qwyrp/pdmi-onderhoudspagina', 
+	__FILE__, 
+	'pdmi-onderhoudspagina' // Aangepast naar jouw eigen plugin slug
+);
+
+// Optioneel: Als je een specifieke branch wilt controleren (bijv. 'main')
+$myUpdateChecker->setBranch('main');
+
 if ( ! defined( 'PDMIUC_PLUGIN_FILE' ) ) {
 	define( 'PDMIUC_PLUGIN_FILE', __FILE__ );
 }
