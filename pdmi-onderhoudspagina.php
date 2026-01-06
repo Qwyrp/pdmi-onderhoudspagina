@@ -1,0 +1,38 @@
+<?php
+/**
+ * Plugin Name:       PDMI-onderhoudspagina
+ * Plugin URI:        https://pdminternetdiensten.nl
+ * Description:       Onderhoudspagina dmv tekst of een plaatje.
+ * Version:           1.0
+ * Author:            PDMI
+ * Author URI:        https://pdminternetdiensten.nl
+ * Text Domain:       pdmi-onderhoudspagina
+ * Domain Path:       /languages
+ *
+ * @package PDMI\Under\Construction
+ */
+
+defined( 'ABSPATH' ) || exit;
+
+if ( ! defined( 'PDMIUC_PLUGIN_FILE' ) ) {
+	define( 'PDMIUC_PLUGIN_FILE', __FILE__ );
+}
+
+use PDMI\Under\Construction\Plugin;
+
+require_once __DIR__ . '/includes/class-plugin.php';
+
+/**
+ * Returns the singleton instance of the plugin.
+ *
+ * @return Plugin
+ */
+function pdmiuc() {
+	return Plugin::get_instance();
+}
+
+register_activation_hook( __FILE__, array( Plugin::class, 'activate' ) );
+register_deactivation_hook( __FILE__, array( Plugin::class, 'deactivate' ) );
+
+pdmiuc()->run();
+

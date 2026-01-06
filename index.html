@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Social Media Foto Converter</title>
+  <link rel="stylesheet" href="assets/css/style.css" />
+</head>
+<body>
+  <main class="page">
+    <header class="page__header">
+      <div class="page__brand">
+        <h1>Social Media Foto Converter</h1>
+        <p>Upload foto's en download bestanden die geschikt zijn voor Facebook, Instagram en TikTok.</p>
+      </div>
+      <div class="page__logo">
+        <!-- Zorg dat dit logo-bestand bestaat op assets/img/pdm-logo.png -->
+        <img src="assets/img/pdm-logo.png" alt="PDM internetdiensten" />
+      </div>
+    </header>
+
+    <section class="card">
+      <h2>1. Upload je foto's</h2>
+      <label class="file-input">
+        <span id="fileCheck" class="file-input__check" aria-hidden="true">✔</span>
+        <span class="file-input__label">Kies foto's</span>
+        <span id="fileCount" class="file-input__count"></span>
+        <input id="fileInput" type="file" accept="image/*" multiple />
+      </label>
+      <p class="hint">Ondersteunde formaten: JPG, PNG, GIF, WebP.</p>
+    </section>
+
+    <section class="card">
+      <h2>2. Kies platforms en instellingen</h2>
+      <div class="options">
+        <fieldset>
+          <legend>Social media platforms</legend>
+          <label>
+            <input type="checkbox" id="fbCheck" checked />
+            Facebook (liggend 1200×630)
+          </label>
+          <label>
+            <input type="checkbox" id="igCheck" checked />
+            Instagram (staand 4:5, 1080×1350)
+          </label>
+          <label>
+            <input type="checkbox" id="ttCheck" checked />
+            TikTok (staand 1080×1920)
+          </label>
+        </fieldset>
+
+        <fieldset>
+          <legend>Compressie (JPEG kwaliteit)</legend>
+          <div class="range-row">
+            <input type="range" id="qualityRange" min="60" max="95" value="85" />
+            <span id="qualityValue">85%</span>
+          </div>
+          <p class="hint">Lagere waarde = kleiner bestand, mogelijk iets minder scherpte.</p>
+        </fieldset>
+      </div>
+
+      <button id="convertBtn" class="btn-primary">3. Maak social media bestanden</button>
+      <p id="status" class="status"></p>
+    </section>
+
+    <section class="card">
+      <h2>4. Resultaten & downloads</h2>
+      <div class="download-all-row">
+        <button id="downloadAllBtn" class="btn-secondary" disabled>Download alle bestanden</button>
+      </div>
+      <div id="results" class="results"></div>
+    </section>
+  </main>
+
+  <footer class="page__footer">
+    <p>Bestandsnamen bevatten het platform, bijvoorbeeld <code>mijnfoto_instagram_1080x1080.jpg</code>.</p>
+    <p>© <span id="copyrightYear"></span>
+      <a href="https://pdminternetdiensten.nl" target="_blank" rel="noopener noreferrer">PDM internetdiensten</a>
+    </p>
+  </footer>
+
+  <script src="assets/js/app.js"></script>
+</body>
+</html>
+
+
