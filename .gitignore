@@ -1,0 +1,11 @@
+# WordPress
+*.log
+.DS_Store
+Thumbs.db
+
+# Node
+node_modules/
+
+# Build tools
+vendor/
+*.zip
