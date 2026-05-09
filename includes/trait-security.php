@@ -93,9 +93,9 @@ trait Security {
 		}
 
 		[ $network, $prefix ] = explode( '/', $entry, 2 );
-		$prefix  = (int) $prefix;
-		$ip_bin  = @inet_pton( $ip );      // phpcs:ignore WordPress.PHP.NoSilencedErrors.Discouraged
-		$net_bin = @inet_pton( $network ); // phpcs:ignore WordPress.PHP.NoSilencedErrors.Discouraged
+		$prefix               = (int) $prefix;
+		$ip_bin               = @inet_pton( $ip );      // phpcs:ignore WordPress.PHP.NoSilencedErrors.Discouraged
+		$net_bin              = @inet_pton( $network ); // phpcs:ignore WordPress.PHP.NoSilencedErrors.Discouraged
 
 		if ( false === $ip_bin || false === $net_bin || strlen( $ip_bin ) !== strlen( $net_bin ) ) {
 			return false;
@@ -133,7 +133,7 @@ trait Security {
 	 * @return string IPv4 string when mappable, original otherwise.
 	 */
 	protected function normalize_ip( string $ip ): string {
-		// Short form: ::ffff:x.x.x.x
+		// Short form: ::ffff:x.x.x.x.
 		if ( 0 === strncasecmp( $ip, '::ffff:', 7 ) ) {
 			$candidate = substr( $ip, 7 );
 			if ( filter_var( $candidate, FILTER_VALIDATE_IP, FILTER_FLAG_IPV4 ) ) {

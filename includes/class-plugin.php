@@ -15,7 +15,7 @@ use PDMI\Under\Construction\Public_\Public_Class;
 require_once PDMIUC_PLUGIN_DIR . 'includes/class-loader.php';
 require_once PDMIUC_PLUGIN_DIR . 'includes/trait-security.php';
 require_once PDMIUC_PLUGIN_DIR . 'admin/class-admin.php';
-require_once PDMIUC_PLUGIN_DIR . 'public/class-public.php';
+require_once PDMIUC_PLUGIN_DIR . 'public/class-public-class.php';
 
 /**
  * Plugin bootstrapper — singleton.

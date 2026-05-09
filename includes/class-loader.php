@@ -38,7 +38,7 @@ class Loader {
 	 * @param int    $accepted_args Number of arguments passed to the callback. Default 1.
 	 * @return void
 	 */
-	public function add_action( string $hook, object $component, string $callback, int $priority = 10, int $accepted_args = 1 ): void {
+	public function add_action( string $hook, object $component, string $callback, int $priority = 10, int $accepted_args = 1 ): void { // phpcs:ignore Generic.CodeAnalysis.UnusedFunctionParameter.FoundAfterLastUsed
 		$this->actions[] = compact( 'hook', 'component', 'callback', 'priority', 'accepted_args' );
 	}
 
@@ -52,7 +52,7 @@ class Loader {
 	 * @param int    $accepted_args Number of arguments passed to the callback. Default 1.
 	 * @return void
 	 */
-	public function add_filter( string $hook, object $component, string $callback, int $priority = 10, int $accepted_args = 1 ): void {
+	public function add_filter( string $hook, object $component, string $callback, int $priority = 10, int $accepted_args = 1 ): void { // phpcs:ignore Generic.CodeAnalysis.UnusedFunctionParameter.FoundAfterLastUsed
 		$this->filters[] = compact( 'hook', 'component', 'callback', 'priority', 'accepted_args' );
 	}
 

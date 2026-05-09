@@ -19,16 +19,32 @@ require_once PDMIUC_PLUGIN_DIR . 'includes/trait-security.php';
 class Admin {
 	use Security;
 
-	/** @var string WordPress options group name. */
+	/**
+	 * WordPress options group name.
+	 *
+	 * @var string
+	 */
 	private const SETTINGS_GROUP = 'pdmiuc_settings_group';
 
-	/** @var string WordPress options key. */
+	/**
+	 * WordPress options key.
+	 *
+	 * @var string
+	 */
 	private const OPTION_KEY = 'pdmiuc_settings';
 
-	/** @var string Settings page slug. */
+	/**
+	 * Settings page slug.
+	 *
+	 * @var string
+	 */
 	private const PAGE_SLUG = 'pdmi-onderhoud';
 
-	/** @var string Admin JS handle. */
+	/**
+	 * Admin JS handle.
+	 *
+	 * @var string
+	 */
 	private const SCRIPT_HANDLE = 'pdmiuc-admin';
 
 	/**
@@ -68,12 +84,12 @@ class Admin {
 		);
 
 		$fields = array(
-			array( 'pdmiuc_enabled',         __( 'Onderhoudspagina inschakelen', 'pdmi-onderhoudspagina' ), 'render_enabled_field' ),
-			array( 'pdmiuc_allowed_ips',      __( 'Toegestane IP-adressen',       'pdmi-onderhoudspagina' ), 'render_allowed_ips_field' ),
-			array( 'pdmiuc_display_type',     __( 'Weergave',                     'pdmi-onderhoudspagina' ), 'render_display_type_field' ),
-			array( 'pdmiuc_text_content',     __( 'Tekstinvoer',                  'pdmi-onderhoudspagina' ), 'render_text_content_field' ),
-			array( 'pdmiuc_image_url',        __( 'Afbeeldings-URL',              'pdmi-onderhoudspagina' ), 'render_image_url_field' ),
-			array( 'pdmiuc_access_password',  __( 'Toegangswachtwoord',           'pdmi-onderhoudspagina' ), 'render_access_password_field' ),
+			array( 'pdmiuc_enabled', __( 'Onderhoudspagina inschakelen', 'pdmi-onderhoudspagina' ), 'render_enabled_field' ),
+			array( 'pdmiuc_allowed_ips', __( 'Toegestane IP-adressen', 'pdmi-onderhoudspagina' ), 'render_allowed_ips_field' ),
+			array( 'pdmiuc_display_type', __( 'Weergave', 'pdmi-onderhoudspagina' ), 'render_display_type_field' ),
+			array( 'pdmiuc_text_content', __( 'Tekstinvoer', 'pdmi-onderhoudspagina' ), 'render_text_content_field' ),
+			array( 'pdmiuc_image_url', __( 'Afbeeldings-URL', 'pdmi-onderhoudspagina' ), 'render_image_url_field' ),
+			array( 'pdmiuc_access_password', __( 'Toegangswachtwoord', 'pdmi-onderhoudspagina' ), 'render_access_password_field' ),
 		);
 
 		foreach ( $fields as list( $id, $title, $callback ) ) {
@@ -106,10 +122,10 @@ class Admin {
 			self::SCRIPT_HANDLE,
 			'pdmiucAdmin',
 			array(
-				'ipv4ApiUrl'    => 'https://api4.ipify.org?format=text',
-				'currentIpv6'   => $this->get_raw_server_ip(),
-				'currentIpv4'   => $this->get_current_ip(),
-				'i18n'          => array(
+				'ipv4ApiUrl'  => 'https://api4.ipify.org?format=text',
+				'currentIpv6' => $this->get_raw_server_ip(),
+				'currentIpv4' => $this->get_current_ip(),
+				'i18n'        => array(
 					'fetching'       => __( 'ophalen...', 'pdmi-onderhoudspagina' ),
 					'unavailable'    => __( 'niet beschikbaar', 'pdmi-onderhoudspagina' ),
 					'addToWhitelist' => __( 'Toevoegen aan whitelist', 'pdmi-onderhoudspagina' ),
@@ -256,7 +272,7 @@ class Admin {
 			</button>
 		</p>
 
-<?php
+		<?php
 	}
 
 	/**
@@ -404,12 +420,12 @@ class Admin {
 		return wp_parse_args(
 			get_option( self::OPTION_KEY, array() ),
 			array(
-				'enabled'               => false,
-				'allowed_ips'           => array(),
-				'display_type'          => 'text',
-				'text_content'          => '',
-				'image_url'             => '',
-				'access_password_hash'  => '',
+				'enabled'              => false,
+				'allowed_ips'          => array(),
+				'display_type'         => 'text',
+				'text_content'         => '',
+				'image_url'            => '',
+				'access_password_hash' => '',
 			)
 		);
 	}

@@ -19,16 +19,32 @@ require_once PDMIUC_PLUGIN_DIR . 'includes/trait-security.php';
 class Public_Class {
 	use Security;
 
-	/** @var string WordPress options key. */
+	/**
+	 * WordPress options key.
+	 *
+	 * @var string
+	 */
 	private const OPTION_KEY = 'pdmiuc_settings';
 
-	/** @var string Cookie name for password-based access. */
+	/**
+	 * Cookie name for password-based access.
+	 *
+	 * @var string
+	 */
 	private const ACCESS_COOKIE = 'pdmiuc_access';
 
-	/** @var string Nonce action for the password form. */
+	/**
+	 * Nonce action for the password form.
+	 *
+	 * @var string
+	 */
 	private const NONCE_ACTION = 'pdmiuc_password_form';
 
-	/** @var string Nonce field name in the password form. */
+	/**
+	 * Nonce field name in the password form.
+	 *
+	 * @var string
+	 */
 	private const NONCE_FIELD = 'pdmiuc_password_nonce';
 
 	/**
@@ -67,7 +83,7 @@ class Public_Class {
 
 		wp_die(
 			$this->build_maintenance_markup( $settings ), // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- markup is built with proper escaping functions below.
-			__( 'PDMI Onderhoud', 'pdmi-onderhoudspagina' ),
+			esc_html__( 'PDMI Onderhoud', 'pdmi-onderhoudspagina' ),
 			array( 'response' => 503 )
 		);
 	}
@@ -131,11 +147,12 @@ class Public_Class {
 			return;
 		}
 
-		if ( 'POST' !== ( $_SERVER['REQUEST_METHOD'] ?? '' ) ) { // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+		$request_method = isset( $_SERVER['REQUEST_METHOD'] ) ? sanitize_key( wp_unslash( $_SERVER['REQUEST_METHOD'] ) ) : ''; // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+		if ( 'POST' !== $request_method ) {
 			return;
 		}
 
-		if ( empty( $_POST['pdmiuc_password'] ) || empty( $_POST[ self::NONCE_FIELD ] ) ) { // phpcs:ignore WordPress.Security.NonceVerification.Missing
+		if ( empty( $_POST['pdmiuc_password'] ) || empty( $_POST[ self::NONCE_FIELD ] ) ) { // phpcs:ignore WordPress.Security.NonceVerification.Missing,WordPress.Security.ValidatedSanitizedInput.InputNotSanitized
 			return;
 		}
 
@@ -145,7 +162,7 @@ class Public_Class {
 			return;
 		}
 
-		$password = (string) wp_unslash( $_POST['pdmiuc_password'] ); // phpcs:ignore WordPress.Security.NonceVerification.Missing
+		$password = (string) wp_unslash( $_POST['pdmiuc_password'] ); // phpcs:ignore WordPress.Security.NonceVerification.Missing,WordPress.Security.ValidatedSanitizedInput.InputNotSanitized -- Password is verified by wp_check_password(); sanitizing would corrupt special characters.
 
 		if ( ! wp_check_password( $password, $settings['access_password_hash'] ) ) {
 			return;
