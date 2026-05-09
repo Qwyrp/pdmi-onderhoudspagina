@@ -208,7 +208,7 @@ class Admin {
 		><?php echo esc_textarea( $ip_string ); ?></textarea>
 
 		<p class="description">
-			<?php esc_html_e( "Komma-gescheiden lijst met IP's die de site altijd mogen bekijken.", 'pdmi-onderhoudspagina' ); ?>
+			<?php esc_html_e( "Komma-gescheiden lijst met IP's of CIDR-reeksen die de site altijd mogen bekijken. Voorbeeld: 82.168.45.127, 2a02:a467:fddb:1::/64", 'pdmi-onderhoudspagina' ); ?>
 		</p>
 
 		<p class="description">
@@ -226,6 +226,22 @@ class Admin {
 			}
 			?>
 		</p>
+
+		<?php
+		$ipv6_subnet = $this->get_ipv6_subnet( $raw_ip );
+		if ( null !== $ipv6_subnet ) :
+			?>
+		<p class="description">
+			<?php
+			printf(
+				'%1$s <code>%2$s</code> &mdash; %3$s',
+				esc_html__( 'Jouw IPv6-subnet (/64):', 'pdmi-onderhoudspagina' ),
+				esc_html( $ipv6_subnet ),
+				esc_html__( 'Gebruik dit als jouw IPv6-adres regelmatig wisselt (privacy-extensies).', 'pdmi-onderhoudspagina' )
+			);
+			?>
+		</p>
+		<?php endif; ?>
 
 		<p class="description" id="pdmiuc-ipv4-row">
 			<?php esc_html_e( 'Jouw IPv4-adres:', 'pdmi-onderhoudspagina' ); ?>
@@ -407,6 +423,29 @@ class Admin {
 	 */
 	private function get_current_ip(): string {
 		return $this->normalize_ip( $this->get_raw_server_ip() );
+	}
+
+	/**
+	 * Returns the /64 subnet for an IPv6 address, or null for IPv4 / invalid input.
+	 *
+	 * @param string $ip Raw IP address.
+	 * @return string|null e.g. "2a02:a467:fddb:1::/64"
+	 */
+	private function get_ipv6_subnet( string $ip ): ?string {
+		if ( ! filter_var( $ip, FILTER_VALIDATE_IP, FILTER_FLAG_IPV6 ) ) {
+			return null;
+		}
+
+		$packed = @inet_pton( $ip ); // phpcs:ignore WordPress.PHP.NoSilencedErrors.Discouraged
+		if ( false === $packed || 16 !== strlen( $packed ) ) {
+			return null;
+		}
+
+		// Zero out the last 8 bytes (host part of /64).
+		$network_bin = substr( $packed, 0, 8 ) . str_repeat( "\x00", 8 );
+		$network     = @inet_ntop( $network_bin ); // phpcs:ignore WordPress.PHP.NoSilencedErrors.Discouraged
+
+		return ( false !== $network ) ? strtolower( $network ) . '/64' : null;
 	}
 
 	/**

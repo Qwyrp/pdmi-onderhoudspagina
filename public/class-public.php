@@ -91,7 +91,15 @@ class Public_Class {
 			return false;
 		}
 
-		return in_array( $this->get_visitor_ip(), $allowed, true );
+		$visitor_ip = $this->get_visitor_ip();
+
+		foreach ( $allowed as $entry ) {
+			if ( $this->ip_matches_entry( $visitor_ip, $entry ) ) {
+				return true;
+			}
+		}
+
+		return false;
 	}
 
 	/**
@@ -169,16 +177,25 @@ class Public_Class {
 	/**
 	 * Returns the visitor's IP address normalized to IPv4 when possible.
 	 *
-	 * Checks common proxy headers in order of reliability; falls back to
-	 * REMOTE_ADDR. The Security trait's normalize_ip() converts IPv6-mapped
-	 * IPv4 addresses to plain IPv4 so they match whitelist entries.
+	 * Trusts REMOTE_ADDR first (consistent with what the admin UI displays),
+	 * then falls back to proxy headers only when REMOTE_ADDR yields no valid IP.
+	 * This matches the logic in Admin::get_raw_server_ip() so whitelisted IPs
+	 * are always compared against the same value the user sees in settings.
 	 *
 	 * @return string
 	 */
 	private function get_visitor_ip(): string {
-		$keys = array( 'HTTP_CLIENT_IP', 'HTTP_X_FORWARDED_FOR', 'REMOTE_ADDR' );
+		if ( ! empty( $_SERVER['REMOTE_ADDR'] ) ) { // phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized
+			$validated = filter_var(
+				sanitize_text_field( wp_unslash( $_SERVER['REMOTE_ADDR'] ) ), // phpcs:ignore WordPress.Security.ValidatedSanitizedInput.MissingUnslash
+				FILTER_VALIDATE_IP
+			);
+			if ( false !== $validated ) {
+				return $this->normalize_ip( $validated );
+			}
+		}
 
-		foreach ( $keys as $key ) {
+		foreach ( array( 'HTTP_CF_CONNECTING_IP', 'HTTP_X_FORWARDED_FOR', 'HTTP_CLIENT_IP' ) as $key ) {
 			if ( empty( $_SERVER[ $key ] ) ) { // phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized
 				continue;
 			}
