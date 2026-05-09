@@ -1,0 +1,9 @@
+{
+    "name": "pdmi/onderhoudspagina",
+    "require": {
+        "yahnis-elsts/plugin-update-checker": "^5.5"
+    },
+    "config": {
+        "vendor-dir": "vendor"
+    }
+}

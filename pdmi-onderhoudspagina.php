@@ -24,8 +24,17 @@ define( 'PDMIUC_PLUGIN_DIR', plugin_dir_path( __FILE__ ) );
 define( 'PDMIUC_PLUGIN_URL', plugin_dir_url( __FILE__ ) );
 
 use PDMI\Under\Construction\Plugin;
+use YahnisElsts\PluginUpdateChecker\v5\PucFactory;
 
+require_once PDMIUC_PLUGIN_DIR . 'vendor/autoload.php';
 require_once PDMIUC_PLUGIN_DIR . 'includes/class-plugin.php';
+
+$pdmiuc_updater = PucFactory::buildUpdateChecker(
+	'https://github.com/Qwyrp/pdmi-onderhoudspagina/',
+	__FILE__,
+	'pdmi-onderhoudspagina'
+);
+$pdmiuc_updater->setBranch( 'main' );
 
 /**
  * Returns the singleton plugin instance.
