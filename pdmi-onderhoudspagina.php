@@ -3,7 +3,7 @@
  * Plugin Name:       PDMI Onderhoud
  * Plugin URI:        https://pdmi.nl
  * Description:       Toon een onderhoudspagina met tekst of afbeelding. Vrijstelling op basis van IP-adres of wachtwoord.
- * Version:           2.0.0
+ * Version:           2.0.1
  * Requires at least: 6.0
  * Requires PHP:      8.0
  * Author:            PDM internetdiensten
@@ -19,7 +19,7 @@
 defined( 'ABSPATH' ) || exit;
 
 define( 'PDMIUC_PLUGIN_FILE', __FILE__ );
-define( 'PDMIUC_VERSION', '2.0.0' );
+define( 'PDMIUC_VERSION', '2.0.1' );
 define( 'PDMIUC_PLUGIN_DIR', plugin_dir_path( __FILE__ ) );
 define( 'PDMIUC_PLUGIN_URL', plugin_dir_url( __FILE__ ) );
 
