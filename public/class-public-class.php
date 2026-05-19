@@ -148,7 +148,7 @@ class Public_Class {
 		}
 
 		$request_method = isset( $_SERVER['REQUEST_METHOD'] ) ? sanitize_key( wp_unslash( $_SERVER['REQUEST_METHOD'] ) ) : ''; // phpcs:ignore WordPress.Security.NonceVerification.Recommended
-		if ( 'POST' !== $request_method ) {
+		if ( 'post' !== $request_method ) {
 			return;
 		}
 
